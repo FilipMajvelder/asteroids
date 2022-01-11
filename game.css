@@ -1,0 +1,32 @@
+#canvas1 {
+    width: 900px;  
+    height: 700px;
+    border: 5px solid rgb(255, 255, 255);
+    margin-left: 25%;
+    margin-top: -2%;
+  
+  }
+  body, html {
+    height: 100%;
+    color: rgb(255, 255, 255);
+    background-image: url(img/mainbackground.png);
+  }
+  main{
+    overflow: auto;
+    padding-bottom: 100px;
+  }
+  h1 {
+    color: white;
+    text-align: center;
+  }
+  .jumbotron {
+    background-image: url("img/jumbotronback.png");
+    background-size: cover;
+  }
+  footer{
+    color: white;
+    text-align: center;
+  }
+  .againbutton{
+    padding-left: 1425px;
+  }
