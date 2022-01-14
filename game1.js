@@ -7,7 +7,7 @@ window.onload = function(){
     setInterval(mainloop, 1000/ gamespeed);
 }
 
-var score = 10;
+var score = 5;
 var gamespeed = 50;
 
 const asteroid = {
