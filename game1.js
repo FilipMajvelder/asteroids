@@ -170,7 +170,7 @@ setInterval(function(){
     asteroidCollisionHealth();
     movePlayer();
     pohybPlayerFrame();
-}, 1);
+}, 0,5);
 
 const keys = [];
 
