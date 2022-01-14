@@ -7,7 +7,7 @@ window.onload = function(){
     setInterval(mainloop, 1000/ gamespeed);
 }
 
-var score = 5;
+var score = 10;
 var gamespeed = 50;
 
 const asteroid = {
@@ -170,7 +170,7 @@ setInterval(function(){
     asteroidCollisionHealth();
     movePlayer();
     pohybPlayerFrame();
-}, 0,5);
+}, 0.5);
 
 const keys = [];
 
