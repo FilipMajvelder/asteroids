@@ -7,7 +7,7 @@ window.onload = function(){
     setInterval(mainloop, 1000/ gamespeed);
 }
 
-var score = 1;
+var score = 10;
 var gamespeed = 50;
 
 
