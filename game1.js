@@ -7,32 +7,25 @@ window.onload = function(){
     setInterval(mainloop, 1000/ gamespeed);
 }
 
-var score = 10;
+var score = 1;
 var gamespeed = 50;
 
-const asteroid = {
-    width: 100,
-    height: 100,
-    speed: 5,
-};
-var asteroidX = Math.floor(Math.random()*(canvas.width - asteroid.width));
-var asteroidY = 0;
 
-const asteroid2 = {
-    width: 100,
-    height: 100,
-    speed: 5,
-};
-var asteroidX2 = Math.floor(Math.random()*(canvas.width - asteroid2.width));
-var asteroidY2 = 0;
+var asteroidyPole = [];
 
-const asteroid3 = {
-    width: 100,
-    height: 100,
-    speed: 5,
-};
-var asteroidX3 = Math.floor(Math.random()*(canvas.width - asteroid3.width));
-var asteroidY3 = 0;
+class Asteroidy{
+    constructor(){
+        this.y = 0;
+        this.w = 100;
+        this.h = 100;
+        this.speed = 5;
+        this.x = Math.floor(Math.random()*(canvas.width - this.w));
+    }
+}
+
+for(var i = 0; i < 3; i ++){
+    asteroidyPole.push(new Asteroidy());
+} 
 
 const speedPot = {
     width: 50,
@@ -57,12 +50,8 @@ const playerSprite = new Image();
 playerSprite.src = "img/hulk.png";
 const background = new Image();
 background.src = "img/background1.png";
-const asteroidjedna = new Image();
-asteroidjedna.src = "img/asteroid.png";
-const asteroiddva = new Image();
-asteroiddva.src = "img/asteroid.png";
-const asteroidtri = new Image();
-asteroidtri.src = "img/asteroid.png";
+const asteroidImage = new Image();
+asteroidImage.src = "img/asteroid.png";
 const speedPotion = new Image();
 speedPotion.src = "img/speed.png";
 const gameover = new Image();
@@ -73,37 +62,27 @@ function mainloop(){
     if (result) {
     return;
     }
+    
+    for(var i = 0; i < 3; i ++){
+       ctx.drawImage(asteroidImage, asteroidyPole[i].x, asteroidyPole[i].y, asteroidyPole[i].w, asteroidyPole[i].h);
+    }
 
     ctx.drawImage(speedPotion, speedPotX, speedPotY, speedPot.width, speedPot.height);
-    ctx.drawImage(asteroidjedna, asteroidX, asteroidY, asteroid.width, asteroid.height);
-    ctx.drawImage(asteroiddva, asteroidX2, asteroidY2, asteroid2.width, asteroid2.height);
-    ctx.drawImage(asteroidtri, asteroidX3, asteroidY3, asteroid3.width, asteroid3.height);
+
     
     moveSpeedPot();
     moveAsteroid();
 }
 
 function moveAsteroid(){
-    asteroidY += asteroid.speed;
-    asteroidY2 += asteroid2.speed;
-    asteroidY3 += asteroid3.speed;
-
-
-    if(asteroidY > canvas.height){
-        asteroidY = 0 - asteroid.height;
-        asteroidX = Math.floor(Math.random()*(canvas.width - asteroid.width));
-        asteroid.speed = Math.floor(Math.random()*(12 - 4) + 4);
-    }
-    if(asteroidY2 > canvas.height){
-        asteroidY2 = 0 - asteroid2.height;
-        asteroidX2 = Math.floor(Math.random()*(canvas.width - asteroid2.width));
-        asteroid2.speed = Math.floor(Math.random()*(12 - 4) + 4);
-    }
-    if(asteroidY3 > canvas.height){
-        asteroidY3 = 0 - asteroid3.height;
-        asteroidX3 = Math.floor(Math.random()*(canvas.width - asteroid3.width));
-        asteroid3.speed = Math.floor(Math.random()*(12 - 4) + 4);
-
+    for(var i = 0; i < 3; i ++){
+    asteroidyPole[i].y += asteroidyPole[i].speed;
+    
+      if(asteroidyPole[i].y > canvas.height){
+        asteroidyPole[i].y = 0 - asteroidyPole[i].h;
+        asteroidyPole[i].x = Math.floor(Math.random()*(canvas.width - asteroidyPole[i].w));
+        asteroidyPole[i].speed = Math.floor(Math.random()*(12 - 4) + 4);
+      }
     }
 }
 
@@ -112,23 +91,14 @@ function asteroidCollisionHealth(){
     ctx.font = "30px Comic Sans MS";
     ctx.fillStyle = "red";
     ctx.fillText(" " + score, 700, 50);
-    if(asteroidY + asteroid.height > player.y && asteroidY < player.y + player.height && asteroidX + asteroid.width > player.x && 
-        asteroidX < player.x + player.width){
-            player.x = 0;
-            player.y = canvas.height - player.height -100;
-            score--;
-    }
-    if( asteroidY3 + asteroid3.height > player.y && asteroidY3 < player.y + player.height && asteroidX3 + asteroid.width > player.x && 
-        asteroidX3 < player.x + player.width){
-            player.x = 0;
-            player.y = canvas.height - player.height -100;
-            score--;
-    }
-    if(asteroidY2 + asteroid2.height > player.y && asteroidY2 < player.y + player.height && asteroidX2 + asteroid.width > player.x && 
-        asteroidX2 < player.x + player.width){
-            player.x = 0;
-            player.y = canvas.height - player.height -100;
-            score--;
+
+    for(var i = 0; i < 3; i ++){
+        if(asteroidyPole[i].y + asteroidyPole[i].h > player.y && asteroidyPole[i].y < player.y + player.height && asteroidyPole[i].x + asteroidyPole[i].w > player.x && 
+            asteroidyPole[i].x < player.x + player.width){
+                player.x = 0;
+                player.y = canvas.height - player.height -100;
+                score--;
+        }
     }
 }
 
@@ -140,7 +110,7 @@ function moveSpeedPot(){
         speedPotX = Math.floor(Math.random()*(canvas.width - speedPot.width));
 
     }
-    if(speedPotY + speedPot.height > player.y && speedPotY < player.y + player.height && speedPotX+ asteroid.width > player.x && 
+    if(speedPotY + speedPot.height > player.y && speedPotY < player.y + player.height && speedPotX + speedPot.width > player.x && 
         speedPotX < player.x + player.width){ 
         player.speed = 1;
         speedPotX = 822;
@@ -163,10 +133,11 @@ setInterval(function(){
     ctx.drawImage(background, 0 ,0 ,canvas.width, canvas.height);
     drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, 
         player.x, player.y, player.width, player.height);
+
+    for(var i = 0; i < 3; i ++){
+            ctx.drawImage(asteroidImage, asteroidyPole[i].x, asteroidyPole[i].y, asteroidyPole[i].w, asteroidyPole[i].h);
+    };
     ctx.drawImage(speedPotion, speedPotX, speedPotY, speedPot.width, speedPot.height);
-    ctx.drawImage(asteroidjedna, asteroidX, asteroidY, asteroid.width, asteroid.height);
-    ctx.drawImage(asteroiddva, asteroidX2, asteroidY2, asteroid2.width, asteroid2.height);
-    ctx.drawImage(asteroiddva, asteroidX3, asteroidY3, asteroid3.width, asteroid3.height);
     asteroidCollisionHealth();
     movePlayer();
     pohybPlayerFrame();
