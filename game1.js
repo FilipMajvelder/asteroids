@@ -46,6 +46,8 @@ const player = {
     moving: false,
 };
 
+//importuju obrázky 
+
 const playerSprite = new Image();
 playerSprite.src = "img/hulk.png";
 const background = new Image();
@@ -56,6 +58,8 @@ const speedPotion = new Image();
 speedPotion.src = "img/speed.png";
 const gameover = new Image();
 gameover.src = "img/gameover.png";
+
+//natstaveni gameover a padání asteroidu 
 
 function mainloop(){
     let result = isGameOver();
@@ -74,6 +78,8 @@ function mainloop(){
     moveAsteroid();
 }
 
+//pohyb asteroidu 
+
 function moveAsteroid(){
     for(var i = 0; i < 3; i ++){
     asteroidyPole[i].y += asteroidyPole[i].speed;
@@ -85,6 +91,8 @@ function moveAsteroid(){
       }
     }
 }
+
+//kolize asteroidu a životy
 
 function asteroidCollisionHealth(){
     
@@ -101,6 +109,8 @@ function asteroidCollisionHealth(){
         }
     }
 }
+
+//pohyb speed potionu 
 
 function moveSpeedPot(){
     speedPotY += speedPot.speed;
@@ -124,6 +134,8 @@ function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
 };
 
+ //vykreslení pozadí, panáčka, asteroidu, speed potionu 
+
 setInterval(function(){
     let result = isGameOver();
     if (result) {
@@ -142,6 +154,8 @@ setInterval(function(){
     movePlayer();
     pohybPlayerFrame();
 }, 1);
+
+//pohyb pomoci WASD tlačítek na klávesnici 
 
 const keys = [];
 
@@ -177,10 +191,14 @@ function movePlayer(){
     }
 }
 
+//natstaveni Sprite framu
+
 function pohybPlayerFrame(){
     if (player.frameX < 3 && player.moving) player.frameX++;
     else player.frameX = 0;
 }
+
+//gameover
 
 function isGameOver(){
     let gameOver = false;
